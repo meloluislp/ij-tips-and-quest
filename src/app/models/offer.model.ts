@@ -68,6 +68,7 @@ export interface Profile {
   description: string
   province: Category
   web: string
+  logoUrl?: string
   numberWorkers: number
   url: string
   corporateWebsiteUrl: string

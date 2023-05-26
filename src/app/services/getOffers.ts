@@ -24,7 +24,7 @@ export async function getRandomOffer (): Promise<Offer> {
 
   const randomIndex = Math.floor(Math.random() * items.length)
   const randomOffer = items[randomIndex]
-
+  randomOffer.id = '6cd3aafcbd4a0abe0008c0d8c18373'
   return await getOffer({ id: randomOffer.id })
 }
 
