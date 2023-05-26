@@ -1,4 +1,6 @@
+import { OfferBody } from './components/OfferBody'
 import { OfferHeader } from './components/OfferHeader'
+import { OfferShare } from './components/OfferShare'
 import { Offer } from './models/offer.model'
 import { getRandomOffer } from './services/getOffers'
 
@@ -8,8 +10,12 @@ export default async function Home() {
   return (
     <main className="container container-slotbanner">
       <OfferHeader offer={randomoffer} />
-      <h1> Tesst info job </h1>
-      <pre>{JSON.stringify(randomoffer, null, 2)}</pre>
+      <section className="container-expanded panel-default">
+        <div className="row">
+          <OfferBody offer={randomoffer} />
+          <OfferShare offer={randomoffer} />
+        </div>
+      </section>
     </main>
   )
 }

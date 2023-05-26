@@ -53,7 +53,7 @@ export interface Offer {
   deleted: boolean
   disponibleForFullVisualization: boolean
   availableForVisualization: boolean
-  skillsList: any[]
+  skillsList: Array<{ skill: string }>
   salaryDescription: string
 }
 
