@@ -18,9 +18,8 @@ async function request ({ url }: { url: string }) {
 }
 
 export async function getRandomOffer (): Promise<Offer> {
-  const resp = await request({ url: `${API_URL_SEARCH}/offer` })
+  const resp = await request({ url: `${API_URL_SEARCH}/offer?category=informatica-telecomunicaciones&subcategory=programacion` })
 
-  console.log('resp', resp)
   const { items }: { items: OfferApi[] } = await resp.json()
 
   const randomIndex = Math.floor(Math.random() * items.length)
