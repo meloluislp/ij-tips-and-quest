@@ -6,7 +6,6 @@ import { Tip } from '../models/tip'
 
 interface ModalTipsProps {
   offerId: string
-  show: boolean
   onClose: () => void
 }
 
@@ -20,12 +19,10 @@ export const ModalTips = ({ offerId, show = false, onClose }: ModalTipsProps) =>
       setTips(data)
     }
 
-    if (show) {
-      getTips(offerId)
-    }
-  }, [show, offerId])
+    getTips(offerId)
+  }, [offerId])
   return (
-    <Modal show={show} onClose={onClose}>
+    <Modal onClose={onClose}>
       <div className="ij-Box ij-CvView-PersonalCvSection-infoList-image">
         <div className="sui-AtomImage is-loaded">
           <figure className="sui-AtomImage-figure">

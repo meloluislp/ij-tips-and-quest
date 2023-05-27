@@ -7,10 +7,9 @@ import { SandboxQuestionItem } from './SandboxQuestionItem'
 interface ModalSandBoxProps {
   offerId: string
   onClose: () => void
-  show: boolean
 }
 
-export const ModalSandbox = ({ offerId, show, onClose }: ModalSandBoxProps) => {
+export const ModalSandbox = ({ offerId, onClose }: ModalSandBoxProps) => {
   const [sandboxquestions, setSandBoxQuestions] = useState<SandboxQuestion[]>([])
 
   const handleAnswer = (answer: string, question: SandboxQuestion) => {
@@ -33,13 +32,11 @@ export const ModalSandbox = ({ offerId, show, onClose }: ModalSandBoxProps) => {
       setSandBoxQuestions(sandboxquestions)
     }
 
-    if (show) {
-      getSandbox(offerId)
-    }
-  }, [show, offerId])
+    getSandbox(offerId)
+  }, [offerId])
 
   return (
-    <Modal show={show} onClose={onClose}>
+    <Modal onClose={onClose}>
       <div className="ij-Box ij-CvView-PersonalCvSection-infoList-image">
         <div className="sui-AtomImage is-loaded">
           <figure className="sui-AtomImage-figure">

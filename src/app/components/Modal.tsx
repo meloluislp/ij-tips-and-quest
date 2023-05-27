@@ -1,18 +1,29 @@
-import { ReactNode } from 'react'
+import { ReactNode, useRef } from 'react'
 
 interface ModalProps {
-  show: boolean
   onClose: () => void
   children: ReactNode
 }
-export const Modal = ({ children, show = false, onClose }: ModalProps) => {
+export const Modal = ({ children, onClose }: ModalProps) => {
+  const modalRef = useRef<HTMLDivElement>(null)
+  const diaLogRef = useRef<HTMLDivElement>(null)
+
   const handleClose = () => {
-    onClose()
+    if (modalRef.current !== null) {
+      modalRef.current.classList.add('sui-MoleculeModal-out')
+      diaLogRef.current?.classList.add('sui-MoleculeModal-dialog--out')
+      setTimeout(() => {
+        onClose()
+      }, 200)
+    }
   }
 
   return (
-    <div className="sui-MoleculeModal" draggable="false" style={{ display: show ? 'flex' : 'none' }}>
-      <div className="sui-MoleculeModal-dialog sui-MoleculeModal-dialog--fit sui-MoleculeModal-dialog--size-large">
+    <div className="sui-MoleculeModal z-50 " draggable="false" style={{ display: 'flex' }} ref={modalRef}>
+      <div
+        className="sui-MoleculeModal-dialog sui-MoleculeModal-dialog--fit sui-MoleculeModal-dialog--size-large"
+        ref={diaLogRef}
+      >
         <div className="sui-MoleculeModalContent">
           <div className="ij-Box ij-DrawerModalInfo-close">
             <button className="sui-AtomIcon sui-AtomIcon--medium sui-AtomIcon--primary" onClick={handleClose}>
