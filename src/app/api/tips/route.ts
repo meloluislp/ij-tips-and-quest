@@ -1,5 +1,6 @@
+import { getCompleationPromptReponse } from '@/app/services/apiOpenAI'
 import { getOffer } from '@/app/services/getOffers'
-import { getOpenIATipsForOffer } from '@/app/services/getOpenIATipsForOffer'
+import { getOfferTipsPrompt } from '@/app/services/getPrompts'
 
 export async function GET (req: Request) {
   const { searchParams } = new URL(req.url)
@@ -10,13 +11,9 @@ export async function GET (req: Request) {
   }
 
   const offer = await getOffer({ id })
+  const prompt = getOfferTipsPrompt(offer)
+  const response = await getCompleationPromptReponse(prompt)
 
-  const data = await getOpenIATipsForOffer(offer)
-
-  const tips = data.tips.map((text: string, index: number) => ({
-    id: `${index}`,
-    text
-  }))
-
+  const tips = response?.tips.map((tip: string, index: number) => ({ id: index.toString(), tip })) ?? []
   return new Response(JSON.stringify(tips), { status: 200 })
 }

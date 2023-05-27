@@ -16,7 +16,7 @@ export const ModalTips = ({ offerId, show = false, onClose }: ModalTipsProps) =>
     const getTips = async (offerId: string) => {
       const response = await fetch(`/api/tips/?id=${offerId}`)
       const data = await response.json()
-      setTips(data)
+      setTips(data.tips)
     }
 
     getTips(offerId)

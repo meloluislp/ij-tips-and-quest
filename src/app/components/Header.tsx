@@ -2,7 +2,7 @@ export const Header = () => {
   return (
     <header className="panel-canvas border-bottom">
       <section className="global-nav global-nav-logged">
-        <a id="home-nologged-menu" href="javascript:;" className="js-open-menu nav-bar-toggle iconfont-BurguerMenu">
+        <a id="home-nologged-menu" href="/" className="js-open-menu nav-bar-toggle iconfont-BurguerMenu">
           <span>Menú</span>
         </a>
         <nav id="nav-mobile" className="nav-mobile">
