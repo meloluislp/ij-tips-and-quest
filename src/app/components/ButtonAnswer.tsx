@@ -22,7 +22,7 @@ export const ButtonAnswer = ({ option, onClick }: ButtonAnswerProps) => {
         className="absolute z-10"
       >
         <path
-          fill-rule="evenodd"
+          fillRule="evenodd"
           clipRule="evenodd"
           d="M13.2346 20.2329C-6.29519 41.2195 -2.11079 79.6324 12.2021 98.6279C36.5052 130.883 116.093 113.124 117.884 69.1735C121.578 -21.5621 36.3029 -4.55592 13.2346 20.2329Z"
           fill={colors[option]}
