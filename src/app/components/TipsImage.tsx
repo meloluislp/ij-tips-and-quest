@@ -21,15 +21,10 @@ export const TipsImage = ({ className = '' }) => (
       y={33}
       maskUnits="userSpaceOnUse"
       style={{
-        maskType: 'luminance',
+        maskType: 'luminance'
       }}
     >
-      <path
-        fill="#fff"
-        fillRule="evenodd"
-        d="M52.995 33.719h163.298v178.759H52.995V33.718Z"
-        clipRule="evenodd"
-      />
+      <path fill="#fff" fillRule="evenodd" d="M52.995 33.719h163.298v178.759H52.995V33.718Z" clipRule="evenodd" />
     </mask>
     <g mask="url(#a)">
       <path
@@ -47,15 +42,10 @@ export const TipsImage = ({ className = '' }) => (
       y={20}
       maskUnits="userSpaceOnUse"
       style={{
-        maskType: 'luminance',
+        maskType: 'luminance'
       }}
     >
-      <path
-        fill="#fff"
-        fillRule="evenodd"
-        d="M85.689 20.644h68.837v114.922H85.688V20.644Z"
-        clipRule="evenodd"
-      />
+      <path fill="#fff" fillRule="evenodd" d="M85.689 20.644h68.837v114.922H85.688V20.644Z" clipRule="evenodd" />
     </mask>
     <g mask="url(#b)">
       <path
