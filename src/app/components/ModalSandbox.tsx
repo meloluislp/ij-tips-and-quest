@@ -39,7 +39,7 @@ export const ModalSandbox = ({ offerId, onClose }: ModalSandBoxProps) => {
       <h3 className="ij-BaseTypography ij-Heading ij-Heading-title3 mb-l text-center">
         Practica alguna de tus habilidades
       </h3>
-      <SandboxQuest sandbox={sandboxquestions} />
+      {sandboxquestions?.length > 0 ? <SandboxQuest sandbox={sandboxquestions} /> : null}
     </Modal>
   )
 }
