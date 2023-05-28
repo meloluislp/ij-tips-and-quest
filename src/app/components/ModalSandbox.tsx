@@ -25,7 +25,11 @@ export const ModalSandbox = ({ offerId, onClose }: ModalSandBoxProps) => {
       setSandBoxQuestions(sandboxquestions)
     }
 
-    getSandbox(offerId)
+    try {
+      getSandbox(offerId)
+    } catch (error) {
+      setError(true)
+    }
   }, [offerId])
 
   return (
