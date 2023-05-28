@@ -3,6 +3,8 @@ import { SandboxQuestion } from '../models/sandboxquestion.model'
 import { Modal } from './Modal'
 import { SandBoxImage } from './SandboxImage'
 import { SandboxQuest } from './SandboxQuest'
+import { Loading } from './Loading'
+import { FetchError } from './FetchError'
 
 interface ModalSandBoxProps {
   offerId: string
@@ -11,7 +13,8 @@ interface ModalSandBoxProps {
 
 export const ModalSandbox = ({ offerId, onClose }: ModalSandBoxProps) => {
   const [sandboxquestions, setSandBoxQuestions] = useState<SandboxQuestion[]>([])
-
+  const [error, setError] = useState<boolean>(false)
+  const loading = sandboxquestions?.length === 0 && !error
   useEffect(() => {
     const getSandbox = async (offerId: string) => {
       const response = await fetch(`/api/sandbox/?id=${offerId}`)
@@ -39,6 +42,8 @@ export const ModalSandbox = ({ offerId, onClose }: ModalSandBoxProps) => {
       <h3 className="ij-BaseTypography ij-Heading ij-Heading-title3 mb-l text-center">
         Practica alguna de tus habilidades
       </h3>
+      {loading ? <Loading message="Creando un quick test para esta oferta..." /> : null}
+      {error ? <FetchError /> : null}
       {sandboxquestions?.length > 0 ? <SandboxQuest sandbox={sandboxquestions} /> : null}
     </Modal>
   )

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { SandboxQuestion } from '../models/sandboxquestion.model'
 import { SandboxQuestionItem } from './SandboxQuestionItem'
 import confetti from 'canvas-confetti'

@@ -48,7 +48,7 @@ export const ModalTips = ({ offerId, onClose }: ModalTipsProps) => {
 
       <article className="ij-ProgressIndicatorCard p-l mb-4">
         <div className="ij-Box ij-ProgressIndicatorCard-content ml-l">
-          {tips?.length === 0 && !error ? <Loading message="Generando los mejores Tips para esta oferta..." /> : null}
+          {tips?.length === 0 && !error ? <Loading message="Generando los mejores tips para esta oferta..." /> : null}
           {error ? <FetchError /> : null}
           <ul className="ij-List ij-List--vertical ij-CvView-PersonalCvSection-infoList">
             {tips?.map((item) => (

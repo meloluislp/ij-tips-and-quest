@@ -5,7 +5,7 @@ export function Loading({ message }: { message?: string }) {
         <div className="superballs__dot" />
         <div className="superballs__dot" />
       </div>
-      <p className="text-center w-[220]px">{message}</p>
+      <p className="text-center w-52">{message}</p>
     </section>
   )
 }
