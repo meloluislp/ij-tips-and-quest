@@ -3,23 +3,30 @@ import { Loading } from './Loading'
 import { Modal } from './Modal'
 import { TipsImage } from './TipsImage'
 import { Tip } from '../models/tip'
+import { FetchError } from './FetchError'
 
 interface ModalTipsProps {
   offerId: string
   onClose: () => void
 }
 
-export const ModalTips = ({ offerId, show = false, onClose }: ModalTipsProps) => {
+export const ModalTips = ({ offerId, onClose }: ModalTipsProps) => {
   const [tips, setTips] = useState<Tip[]>([])
+  const [error, setError] = useState<boolean>(false)
 
   useEffect(() => {
     const getTips = async (offerId: string) => {
       const response = await fetch(`/api/tips/?id=${offerId}`)
       const data = await response.json()
-      setTips(data.tips)
+      console.log(data)
+      setTips(data)
     }
 
-    getTips(offerId)
+    try {
+      getTips(offerId)
+    } catch (error) {
+      setError(true)
+    }
   }, [offerId])
   return (
     <Modal onClose={onClose}>
@@ -38,18 +45,23 @@ export const ModalTips = ({ offerId, show = false, onClose }: ModalTipsProps) =>
         Recuerda que estos son solo algunos consejos. Cada trabajo es único y la mejor manera de descubrirlo es
         ¡postulándote! No te desanimes, cada experiencia cuenta y es una oportunidad para aprender y crecer.
       </p>
-      {tips?.length === 0 ? <Loading /> : null}
 
-      <ul className="ij-List ij-List--vertical ij-CvView-PersonalCvSection-infoList">
-        {tips?.map((tip) => (
-          <li
-            key={tip.id}
-            className="ij-List-item ij-BaseTypography ij-BaseTypography-gray-D2 ij-Text ij-Text-body1 mb-m"
-          >
-            {tip.text}
-          </li>
-        ))}
-      </ul>
+      <article className="ij-ProgressIndicatorCard p-l mb-4">
+        <div className="ij-Box ij-ProgressIndicatorCard-content ml-l">
+          {tips?.length === 0 && !error ? <Loading message="Generando los mejores Tips para esta oferta..." /> : null}
+          {error ? <FetchError /> : null}
+          <ul className="ij-List ij-List--vertical ij-CvView-PersonalCvSection-infoList">
+            {tips?.map((item) => (
+              <li
+                key={item.id}
+                className="ij-List-item ij-BaseTypography ij-BaseTypography-gray-D2 ij-Text ij-Text-body1 mb-m"
+              >
+                {item.tip}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </article>
     </Modal>
   )
 }

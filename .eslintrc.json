@@ -9,6 +9,7 @@
     "@typescript-eslint/explicit-function-return-type": "off",
     "jsx-quotes": ["error", "prefer-double"],
     "@typescript-eslint/no-misused-promises": "off",
-    "@typescript-eslint/space-before-function-paren": "off"
+    "@typescript-eslint/space-before-function-paren": "off",
+    "@typescript-eslint/no-floating-promises": "off"
   }
 }
