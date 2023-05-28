@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { SandboxQuestion } from '../models/sandboxquestion.model'
 import { Modal } from './Modal'
 import { SandBoxImage } from './SandboxImage'
-import { SandboxQuestionItem } from './SandboxQuestionItem'
+import { SandboxQuest } from './SandboxQuest'
 
 interface ModalSandBoxProps {
   offerId: string
@@ -11,16 +11,6 @@ interface ModalSandBoxProps {
 
 export const ModalSandbox = ({ offerId, onClose }: ModalSandBoxProps) => {
   const [sandboxquestions, setSandBoxQuestions] = useState<SandboxQuestion[]>([])
-
-  const handleAnswer = (answer: string, question: SandboxQuestion) => {
-    const newSandboxQuestions = sandboxquestions.map((sandboxquestion) => {
-      if (sandboxquestion.question === question.question) {
-        return { ...sandboxquestion, response: answer }
-      }
-      return sandboxquestion
-    })
-    setSandBoxQuestions(newSandboxQuestions)
-  }
 
   useEffect(() => {
     const getSandbox = async (offerId: string) => {
@@ -46,16 +36,10 @@ export const ModalSandbox = ({ offerId, onClose }: ModalSandBoxProps) => {
           </figure>
         </div>
       </div>
-      <h3 className="ij-BaseTypography ij-Heading ij-Heading-title3 mb-l">Mejora tu CV de forma fácil y rápida</h3>
-      <section className="ij-List ij-List--vertical">
-        {sandboxquestions?.map((sandboxquestion) => (
-          <SandboxQuestionItem
-            key={sandboxquestion.question}
-            question={sandboxquestion}
-            onAnswer={(answer) => handleAnswer(answer, sandboxquestion)}
-          />
-        ))}
-      </section>
+      <h3 className="ij-BaseTypography ij-Heading ij-Heading-title3 mb-l text-center">
+        Practica alguna de tus habilidades
+      </h3>
+      <SandboxQuest sandbox={sandboxquestions} />
     </Modal>
   )
 }

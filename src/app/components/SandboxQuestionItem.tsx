@@ -9,7 +9,7 @@ export const SandboxQuestionItem = ({ question, onAnswer }: SandboxQuestionProps
   const options = Object.keys(question.options).map((key) => ({ index: key, response: question.options[key] }))
 
   return (
-    <article className="ij-ProgressIndicatorCard p-l mb-4">
+    <article className="ij-ProgressIndicatorCard p-l mb-4 w-full">
       <div className="ij-Box ij-ProgressIndicatorCard-content ml-l">
         <p className="ij-BaseTypography ij-Text ij-Text-body1 mb-s">{question.question}</p>
         {options.map((option) => (
