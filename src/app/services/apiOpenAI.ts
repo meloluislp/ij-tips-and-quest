@@ -18,13 +18,23 @@ function getOfferDescriptionPrompt(offer: Offer) {
 function getOfferTipsPrompt(offer: Offer) {
   const offerPromptDescription = getOfferDescriptionPrompt(offer)
 
-  return `${offerPromptDescription}\n\nteniendo en cuanta la anterior oferta de  
-    trabajo te daria algunos tips(5 maximo) con  formato json  {"tips":[ "tip1", "tip2","tipn"]} sin saltos de linea`.trim()
+  return `${offerPromptDescription}\n\nGenera 5 tips en formato JSON sin saltos de 
+  línea en base a la oferta anterior.`.trim()
+}
+
+function getOfferSandboxPrompt(offer: Offer) {
+  const offerPromptDescription = getOfferDescriptionPrompt(offer)
+
+  return `${offerPromptDescription}\n\n
+  Genera preguntas y respuestas en formato JSON multiple choice. 
+  Cada pregunta debe tener un enunciado y al menos dos opciones de respuesta 
+  etiquetadas con letras. Incluye la propiedad "answer" para indicar la opción correcta.`.trim()
 }
 
 export async function getCompleationPromptReponseForOfferTips(offer: Offer) {
   const prompt = getOfferTipsPrompt(offer)
 
+  console.log({ prompt })
   // const completion = await openai.createCompletion({
   //   model: 'text-davinci-003',
   //   prompt,
