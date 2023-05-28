@@ -1,6 +1,6 @@
-import { getCompleationPromptReponse } from '@/app/services/apiOpenAI'
+import apiOpenAI from '@/app/services/apiOpenAI'
+import apiSupabase from '@/app/services/apiSupabase'
 import { getOffer } from '@/app/services/getOffers'
-import { getOfferTipsPrompt } from '@/app/services/getPrompts'
 
 export async function GET (req: Request) {
   const { searchParams } = new URL(req.url)
@@ -11,9 +11,16 @@ export async function GET (req: Request) {
   }
 
   const offer = await getOffer({ id })
-  const prompt = getOfferTipsPrompt(offer)
-  const response = await getCompleationPromptReponse(prompt)
 
-  const tips = response?.tips.map((tip: string, index: number) => ({ id: index.toString(), tip })) ?? []
+  const cachedTips = await apiSupabase.getCachedTips({ offerId: id })
+
+  if (cachedTips !== null) {
+    return new Response(JSON.stringify(cachedTips), { status: 200 })
+  }
+
+  const tips = await apiOpenAI.getCompleationPromptReponseForOfferTips(offer)
+
+  await apiSupabase.cacheTips({ offerId: id, tips })
+
   return new Response(JSON.stringify(tips), { status: 200 })
 }

@@ -1,5 +1,6 @@
 import { getOffer } from '@/app/services/getOffers'
-import { getOpenAISandbox } from '@/app/services/getOpenIASandbox'
+import apiOpenAI from '@/app/services/apiOpenAI'
+import apiSupabase from '@/app/services/apiSupabase'
 
 export async function GET (req: Request) {
   const { searchParams } = new URL(req.url)
@@ -11,7 +12,14 @@ export async function GET (req: Request) {
 
   const offer = await getOffer({ id })
 
-  const data = await getOpenAISandbox(offer)
+  const cachedSandbox = await apiSupabase.getCachedSandbox({ offerId: id })
+  if (cachedSandbox !== null) {
+    return new Response(JSON.stringify(cachedSandbox), { status: 200 })
+  }
 
-  return new Response(JSON.stringify(data), { status: 200 })
+  const sandbox = await apiOpenAI.getCompleationPromptReponseForOfferSandbox(offer)
+
+  await apiSupabase.cacheSandbox({ offerId: id, sandbox })
+
+  return new Response(JSON.stringify(sandbox), { status: 200 })
 }
