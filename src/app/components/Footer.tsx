@@ -1,5 +1,3 @@
-import Image from 'next/image'
-
 export const Footer = () => {
   return (
     <footer className="footer footer-slotbanner">
@@ -220,16 +218,6 @@ export const Footer = () => {
               <span>© Adevinta Spain S.L.U. </span>
             </li>
           </ul>
-
-          <div className="break">
-            <ul className="footer-nav-bar-badges list-inline-center margin-top">
-              <li>
-                <a href="/" title="Adevinta">
-                  <Image alt="Adevinta" src="/pic-adevinta-logo.png" width="80" height="20" />
-                </a>
-              </li>
-            </ul>
-          </div>
         </div>
       </div>
     </footer>
