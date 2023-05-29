@@ -10,6 +10,7 @@
     "jsx-quotes": ["error", "prefer-double"],
     "@typescript-eslint/no-misused-promises": "off",
     "@typescript-eslint/space-before-function-paren": "off",
-    "@typescript-eslint/no-floating-promises": "off"
+    "@typescript-eslint/no-floating-promises": "off",
+    "eslint-disable-next-line multiline-ternary": "off"
   }
 }

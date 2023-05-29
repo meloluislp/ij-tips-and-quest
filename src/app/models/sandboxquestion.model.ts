@@ -5,4 +5,5 @@ export interface SandboxQuestion {
     [key: string]: string
   }
   answer: string
+  response?: string
 }

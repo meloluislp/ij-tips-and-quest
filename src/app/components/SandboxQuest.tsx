@@ -2,17 +2,13 @@ import { useState } from 'react'
 import { SandboxQuestion } from '../models/sandboxquestion.model'
 import { SandboxQuestionItem } from './SandboxQuestionItem'
 import confetti from 'canvas-confetti'
-interface SandboxQuestProps {
-  sandbox: SandboxQuestion[]
-}
 
-export const SandboxQuest = ({ sandbox }: SandboxQuestProps) => {
+export const SandboxQuest = ({ sandbox }: { sandbox: SandboxQuestion[] }) => {
   const [current, setCurrent] = useState<number>(0)
   const [sandboxquestions, setSandBoxQuestions] = useState<SandboxQuestion[]>(() =>
     sandbox.map((item, index) => ({ ...item, response: '', id: index }))
   )
 
-  console.log({ current, sandboxquestions })
   const handleNext = () => {
     const currentIndex = sandboxquestions.findIndex((item) => item.id === current)
     if (currentIndex === sandboxquestions.length - 1) {
