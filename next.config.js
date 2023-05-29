@@ -4,7 +4,18 @@ const nextConfig = {
     domains: ['localhost', 'multimedia.infojobs.net']
   },
   generateEtags: false,
-  reactStrictMode: true
+  reactStrictMode: true,
+  headers: () => [
+    {
+      source: '/:path*',
+      headers: [
+        {
+          key: 'Cache-Control',
+          value: 'no-store'
+        }
+      ]
+    }
+  ]
 }
 
 module.exports = nextConfig
