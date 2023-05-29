@@ -74,14 +74,17 @@ export const Advice = () => {
         </svg>
 
         <p className="text-white">
-          ¡Aviso! Este sitio es una réplica del
-          <a className="font-bold text-white" href="https://www.infojobs.net/">
-            {' '}
-            original{' '}
-          </a>
-          diseñada para la
-          <a className="font-bold text-white" href="https://midu.link/infojobs">
-            {' '}
+          ¡Aviso! Este sitio es una réplica del{' '}
+          <a
+            className="font-bold text-white underline"
+            href="https://www.infojobs.net/"
+            target="_blank"
+            rel="noreferrer"
+          >
+            original
+          </a>{' '}
+          diseñado para la{' '}
+          <a className="font-bold text-white underline" href="https://midu.link/infojobs" rel="noreferrer">
             hackatón de Info Jobs
           </a>
           .
