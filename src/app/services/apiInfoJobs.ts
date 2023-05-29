@@ -16,8 +16,7 @@ async function request ({ url }: { url: string }) {
 
   return await fetch(url, options)
 }
-
-export async function getRandomOffer (): Promise<Offer> {
+async function getRandomOffer (): Promise<Offer> {
   const resp = await request({ url: `${API_URL_SEARCH}/offer?category=informatica-telecomunicaciones&subcategory=programacion` })
 
   const { items }: { items: OfferApi[] } = await resp.json()
@@ -27,8 +26,20 @@ export async function getRandomOffer (): Promise<Offer> {
   return await getOffer({ id: randomOffer.id })
 }
 
-export async function getOffer ({ id }: { id: string }): Promise<Offer> {
+async function getOffer ({ id }: { id: string }): Promise<Offer> {
   const resp = await request({ url: `${API_URL_OFFER}/offer/${id}` })
   const offer: Offer = await resp.json()
   return offer
 }
+
+async function getRandomOfferId (): Promise<string> {
+  const randomOffer = await getRandomOffer()
+  return randomOffer.id
+}
+const apiInfoJobs = {
+  getRandomOffer,
+  getOffer,
+  getRandomOfferId
+}
+
+export default apiInfoJobs

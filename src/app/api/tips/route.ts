@@ -1,6 +1,6 @@
+import apiInfoJobs from '@/app/services/apiInfoJobs'
 import apiOpenAI from '@/app/services/apiOpenAI'
 import apiSupabase from '@/app/services/apiSupabase'
-import { getOffer } from '@/app/services/getOffers'
 
 export async function GET (req: Request) {
   const { searchParams } = new URL(req.url)
@@ -10,7 +10,7 @@ export async function GET (req: Request) {
     return new Response('id is required', { status: 400 })
   }
 
-  const offer = await getOffer({ id })
+  const offer = await apiInfoJobs.getOffer({ id })
 
   const cachedTips = await apiSupabase.getCachedTips({ offerId: id })
 

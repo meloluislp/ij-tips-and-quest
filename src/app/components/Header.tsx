@@ -1,4 +1,9 @@
-export const Header = () => {
+import apiInfoJobs from '../services/apiInfoJobs'
+import apiSupabase from '../services/apiSupabase'
+
+export const Header = async () => {
+  const nextOfferId: string = await apiInfoJobs.getRandomOfferId()
+  const cachedOfferId: string = await apiSupabase.getCacheOfferId()
   return (
     <header className="panel-canvas border-bottom">
       <section className="global-nav global-nav-logged">
@@ -46,6 +51,26 @@ export const Header = () => {
               <li>
                 <a href="/" title="Quién me ve">
                   Quién me ve
+                </a>
+              </li>
+              <li>
+                <a href={`/offer/${nextOfferId}`} title="Ver Oferta">
+                  <strong
+                    style={{ color: '#FF6340', border: '1px solid #FF6340 ' }}
+                    className="border-slate-100 rounded p-2"
+                  >
+                    Cargar otra oferta
+                  </strong>
+                </a>
+              </li>
+              <li>
+                <a href={`/offer/${cachedOfferId}`} title="Ver Oferta de cache">
+                  <strong
+                    style={{ color: '#167DB7', border: '1px solid #167DB7 ' }}
+                    className="border-slate-100 rounded p-2"
+                  >
+                    Ver oferta desde cache
+                  </strong>
                 </a>
               </li>
             </ul>
