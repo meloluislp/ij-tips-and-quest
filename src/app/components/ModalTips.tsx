@@ -39,7 +39,9 @@ export const ModalTips = ({ offerId, onClose }: ModalTipsProps) => {
           </figure>
         </div>
       </div>
-      <h3 className="ij-BaseTypography ij-Heading ij-Heading-title3 mb-l">¡Adelante, no dudes en intentarlo!</h3>
+      <h3 className="ij-BaseTypography ij-Heading ij-Heading-title3 mb-l text-center">
+        ¡Adelante, no dudes en intentarlo!
+      </h3>
 
       <p className="ij-BaseTypography ij-BaseTypography-gray-D1 ij-Text ij-Text-body1 mb-l">
         Recuerda que estos son solo algunos consejos. Cada trabajo es único y la mejor manera de descubrirlo es

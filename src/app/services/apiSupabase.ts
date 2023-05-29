@@ -45,11 +45,26 @@ const getCachedSandbox = async ({ offerId }: { offerId: string }) => {
   return JSON.parse(data?.[0]?.sandbox)
 }
 
+const getCacheOfferId = async() => {
+  // limit 5 random
+  const supabase = createClient(SUPABASE_API_URL, SUPABASE_API_KEY)
+  const { data, error } = await supabase.from('sandbox').select('*').order('id', { ascending: false }).limit(5)
+
+  if (error !== null || data?.length === 0) {
+    return null
+  }
+
+  const ids = data.map((item: any) => item.id)
+
+  return ids[Math.floor(Math.random() * ids.length)]
+}
+
 const apiSupabase = {
   cacheTips,
   getCachedTips,
   cacheSandbox,
-  getCachedSandbox
+  getCachedSandbox,
+  getCacheOfferId
 }
 
 export default apiSupabase

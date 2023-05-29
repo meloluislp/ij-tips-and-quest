@@ -1,4 +1,4 @@
-import { Configuration, OpenAIApi } from 'openai'
+import { Configuration, OpenAIApi, ChatCompletionRequestMessageRoleEnum } from 'openai'
 import { Offer } from '../models/offer.model'
 
 const OPEN_AI_API_KEY = process.env.OPEN_IA_TOKEN ?? ''
@@ -15,16 +15,28 @@ function getOfferDescriptionPrompt(offer: Offer) {
     ${offer.experienceMin.value}\nImprescindible residente en: ${offer.residence.value}\n
     Descripcion: ${offer.description}\n\nSkills: ${skills}`.trim()
 }
+
 function getOfferTipsPrompt(offer: Offer) {
   const offerPromptDescription = getOfferDescriptionPrompt(offer)
-
   return `${offerPromptDescription}\n\nGenera 5 tips en formato JSON sin saltos de línea, clave tips que sae un array de stirngs, en base a la oferta anterior.`.trim()
 }
 
 function getOfferSandboxPrompt(offer: Offer) {
-  const offerPromptDescription = getOfferDescriptionPrompt(offer)
-
-  return `${offerPromptDescription}\n\nGenera de 2 a 5 preguntas y respuestas multiple choice en formato JSON, formato array de objetos . Cada "question" debe tener un enunciado y al menos dos "options" de respuesta etiquetadas con letras. Incluye la propiedad "answer" para indicar la opción correcta.`.trim()
+  return `Dado este titulo de oferta :"${offer.title}"
+  genera preguntas y respuestas en base a los conceptos tecnicos de programacion queun postulante deberia conocer.el formato de la respuesta seria:
+  { "questions: [
+        {
+          "question": "Enunciado de la pregunta",
+          "options": {
+            "a": "Opción A",
+            "b": "Opción B",
+            "c": "Opción C"
+          },
+          "answer": "a"
+        },
+        ...
+      ]}
+  Es muy importante respetar el formato de respuesta esperado`
 }
 
 export async function getCompleationPromptReponseForOfferTips(offer: Offer) {
@@ -38,15 +50,6 @@ export async function getCompleationPromptReponseForOfferTips(offer: Offer) {
   })
 
   const data = completion?.data.choices[0].text ?? ''
-  // const data = `{
-  //   "tips": [
-  //   "Destaca tu experiencia de al menos 3 años en programación informática backend.",
-  //   "Resalta tus habilidades en Node.js, Java, SQL, ETL y API, ya que son requeridas para el puesto.",
-  //   "Muestra tu capacidad analítica, resolutiva y proactiva en el desarrollo de soluciones tecnológicas.",
-  //   "Enfatiza tu habilidad para adaptarte a situaciones cambiantes y para empatizar con los clientes.",
-  //   "Menciona tu interés en formar parte de un equipo flexible y adaptable, capaz de responder rápidamente a las necesidades de los clientes."
-  //   ]
-  //   }`
 
   const tips = JSON.parse(data)?.tips ?? []
   const parseTips = tips.map((tip: string, index: number) => ({ id: index.toString(), tip }))
@@ -55,55 +58,22 @@ export async function getCompleationPromptReponseForOfferTips(offer: Offer) {
 }
 
 export const getCompleationPromptReponseForOfferSandbox = async (offer: Offer) => {
-  const prompt = getOfferSandboxPrompt(offer)
-  console.log({ prompt })
+  const initMessage = getOfferSandboxPrompt(offer)
 
-  // const data = `{
-  //   "questions": [
-  //   {
-  //   "question": "¿Cuál es el requisito mínimo de estudios para el puesto de programador informático backend?",
-  //   "options": [
-  //   "A) Ingeniería Técnica",
-  //   "B) Ingeniería Superior",
-  //   "C) No se menciona",
-  //   "D) Licenciatura en Informática"
-  //   ],
-  //   "answer": "B) Ingeniería Superior"
-  //   },
-  //   {
-  //   "question": "¿Cuántos años de experiencia mínima se requieren para el puesto de programador informático backend?",
-  //   "options": [
-  //   "A) Menos de 1 año",
-  //   "B) Al menos 2 años",
-  //   "C) Al menos 3 años",
-  //   "D) Al menos 5 años"
-  //   ],
-  //   "answer": "C) Al menos 3 años"
-  //   },
-  //   {
-  //   "question": "¿Cuáles son las habilidades requeridas para el puesto de programador informático backend?",
-  //   "options": [
-  //   "A) Python, C#, HTML, CSS",
-  //   "B) Java, Ruby, PHP, XML",
-  //   "C) Node.js, Java, SQL, ETL, API",
-  //   "D) JavaScript, Swift, MongoDB, Angular"
-  //   ],
-  //   "answer": "C) Node.js, Java, SQL, ETL, API"
-  //   }
-  //   ]
-  //   }
-  //   `
+  const prompt = [
+    {
+      role: ChatCompletionRequestMessageRoleEnum.System,
+      content: initMessage
+    }
+  ]
 
-  const completion = await openai.createCompletion({
-    model: 'text-davinci-003',
-    prompt,
-    max_tokens: 2000,
-    temperature: 0.4
+  const completion = await openai.createChatCompletion({
+    model: 'gpt-3.5-turbo',
+    messages: prompt
   })
 
-  const data = completion?.data.choices[0].text ?? ''
-  console.log({ data })
-  const sandbox = JSON.parse(data) ?? []
+  const data = completion?.data.choices[0].message?.content ?? ''
+  const sandbox = JSON.parse(data).questions ?? []
   return sandbox
 }
 
