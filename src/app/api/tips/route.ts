@@ -14,7 +14,7 @@ export async function GET (req: Request) {
 
   const cachedTips = await apiSupabase.getCachedTips({ offerId: id })
 
-  if (cachedTips !== null) {
+  if (cachedTips !== null || cachedTips?.length > 0) {
     return new Response(JSON.stringify(cachedTips), { status: 200 })
   }
 
