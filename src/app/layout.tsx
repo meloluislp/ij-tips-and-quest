@@ -16,6 +16,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="es">
       <body className={inter.className}>
         <Advice />
+        {/* @ts-expect-error Server Component */}
         <Header />
         <main>{children}</main>
         <Footer />
