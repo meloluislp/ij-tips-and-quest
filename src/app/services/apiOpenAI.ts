@@ -43,11 +43,15 @@ export async function getCompleationPromptReponseForOfferTips(offer: Offer) {
   // })
 
   // const data = completion?.data.choices[0].text ?? ''
-  const data = `{"tips": ["Asegúrate de que tu CV refleje tu experiencia en el sector bancario y en el desarrollo de software.",
-  "Asegúrate de que tu CV destaque tus habilidades en Java-Springboot.",
-  "Asegúrate de que tu CV muestre tu experiencia en integración con bases de datos ORACLE.",
-  "Asegúrate de que tu CV muestre tu capacidad para trabajar en equipo y comunicarse de manera efectiva.",
-  "Asegúrate de que tu CV destaque tus habilidades en el diseño y desarrollo de APIs."]}`
+  const data = `{
+    "tips": [
+    "Destaca tu experiencia de al menos 3 años en programación informática backend.",
+    "Resalta tus habilidades en Node.js, Java, SQL, ETL y API, ya que son requeridas para el puesto.",
+    "Muestra tu capacidad analítica, resolutiva y proactiva en el desarrollo de soluciones tecnológicas.",
+    "Enfatiza tu habilidad para adaptarte a situaciones cambiantes y para empatizar con los clientes.",
+    "Menciona tu interés en formar parte de un equipo flexible y adaptable, capaz de responder rápidamente a las necesidades de los clientes."
+    ]
+    }`
 
   const tips = JSON.parse(data)?.tips ?? []
   const parseTips = tips.map((tip: string, index: number) => ({ id: index.toString(), tip }))
@@ -56,51 +60,45 @@ export async function getCompleationPromptReponseForOfferTips(offer: Offer) {
 }
 
 export const getCompleationPromptReponseForOfferSandbox = async (offer: Offer) => {
-  const resp = `[
+  const prompt = getOfferSandboxPrompt(offer)
+  console.log({ prompt })
+  const resp = `{
+    "questions": [
     {
-      "question": "¿Cuál de las siguientes opciones describe correctamente la diferencia entre una lista y una tupla en Python?",
-      "options": {
-        "a": "Una lista permite duplicados, mientras que una tupla no.",
-        "b": "Una lista es inmutable, mientras que una tupla es mutable."
-      },
-      "answer": "a"
+    "question": "¿Cuál es el requisito mínimo de estudios para el puesto de programador informático backend?",
+    "options": [
+    "A) Ingeniería Técnica",
+    "B) Ingeniería Superior",
+    "C) No se menciona",
+    "D) Licenciatura en Informática"
+    ],
+    "answer": "B) Ingeniería Superior"
     },
     {
-      "question": "¿Cuál de las siguientes opciones describe correctamente la diferencia entre una función y un método en Python?",
-      "options": {
-        "a": "Una función opera en un objeto o una clase, mientras que un método es independiente de los objetos y clases.",
-        "b": "Una función es una secuencia de instrucciones que puede ser reutilizada, mientras que un método es un bloque de código asociado a un objeto o una clase."
-      },
-      "answer": "b"
+    "question": "¿Cuántos años de experiencia mínima se requieren para el puesto de programador informático backend?",
+    "options": [
+    "A) Menos de 1 año",
+    "B) Al menos 2 años",
+    "C) Al menos 3 años",
+    "D) Al menos 5 años"
+    ],
+    "answer": "C) Al menos 3 años"
     },
     {
-      "question": "¿Cómo se define una función en Python?",
-      "options": {
-        "a": "definir()",
-        "b": "funcion()",
-        "c": "def()"
-      },
-      "answer": "c"
-    },
-    {
-      "question": "¿Qué es una excepción en Python?",
-      "options": {
-        "a": "Una condición que indica un error o un comportamiento inesperado durante la ejecución de un programa.",
-        "b": "Un tipo especial de variable que almacena un valor booleano."
-      },
-      "answer": "a"
-    },
-    {
-      "question": "¿Cuál es la función utilizada para leer la entrada del usuario en Python?",
-      "options": {
-        "a": "readline()",
-        "b": "input()",
-        "c": "getinput()"
-      },
-      "answer": "b"
+    "question": "¿Cuáles son las habilidades requeridas para el puesto de programador informático backend?",
+    "options": [
+    "A) Python, C#, HTML, CSS",
+    "B) Java, Ruby, PHP, XML",
+    "C) Node.js, Java, SQL, ETL, API",
+    "D) JavaScript, Swift, MongoDB, Angular"
+    ],
+    "answer": "C) Node.js, Java, SQL, ETL, API"
     }
-  ]`
-  return JSON.parse(resp)
+    ]
+    }
+    `
+  const sandbox = JSON.parse(resp).questions ?? []
+  return sandbox
 }
 
 const apiOpenAI = {
