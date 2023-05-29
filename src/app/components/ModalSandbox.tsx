@@ -18,6 +18,11 @@ export const ModalSandbox = ({ offerId, onClose }: ModalSandBoxProps) => {
   useEffect(() => {
     const getSandbox = async (offerId: string) => {
       const response = await fetch(`/api/sandbox/?id=${offerId}`)
+      if (!response.ok) {
+        setError(true)
+
+        throw new Error('Error al obtener sandbox')
+      }
       const data = await response.json()
       const sandboxquestions = data.map((question: any) => {
         return { ...question, response: '' }

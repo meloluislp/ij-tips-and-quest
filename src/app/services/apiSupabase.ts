@@ -48,7 +48,7 @@ const getCachedSandbox = async ({ offerId }: { offerId: string }) => {
 const getCacheOfferId = async() => {
   // limit 5 random
   const supabase = createClient(SUPABASE_API_URL, SUPABASE_API_KEY)
-  const { data, error } = await supabase.from('sandbox').select('*').order('id', { ascending: false }).limit(5)
+  const { data, error } = await supabase.from('sandbox').select('id').order('id', { ascending: false }).limit(5)
 
   if (error !== null || data?.length === 0) {
     return null

@@ -17,6 +17,11 @@ export const ModalTips = ({ offerId, onClose }: ModalTipsProps) => {
   useEffect(() => {
     const getTips = async (offerId: string) => {
       const response = await fetch(`/api/tips/?id=${offerId}`)
+      console.log(response)
+      if (!response.ok) {
+        setError(true)
+        throw new Error('Error al obtener los tips')
+      }
       const data = await response.json()
       console.log(data)
       setTips(data)
